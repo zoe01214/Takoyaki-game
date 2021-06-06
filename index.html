@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Viga&display=swap" rel="stylesheet">
+  <style>
+    html,
+    body,
+    pre,
+    code,
+    kbd,
+    samp,
+    button {
+      font-family: 'Viga', sans-serif;
+
+    }
+
+
+    html,
+    body {
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+      background-color: rgb(250, 240, 231);
+      margin: 0;
+      padding: 0;
+
+    }
+
+    #all {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      background: url(./images/background.png) no-repeat top center, rgb(250, 240, 231);
+      background-size: auto 100%;
+    }
+
+    #flag {
+      width: 100%;
+      height: 100px;
+      background: url('./images/top.png') no-repeat top center/contain;
+    }
+
+    #container {
+      box-sizing: border-box;
+      height: 480px;
+      width: 700px;
+      margin: auto;
+    }
+
+    #top {
+      box-sizing: border-box;
+      display: flex;
+      width: 100%;
+      height: 120px;
+      padding-bottom: 6px;
+      justify-content: space-between;
+    }
+
+    #menubox {
+      box-sizing: border-box;
+      width: 55%;
+      float: left;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
+    #menubox p {
+      width: 100%;
+    }
+
+    #scorebox,
+    #timebox {
+      box-sizing: border-box;
+      width: 15%;
+      font-size: 48px;
+    }
+
+
+    #top p {
+      font-size: 22px;
+      margin: 0 0 15px 0px;
+      border-bottom: 2px solid #ddad44;
+
+    }
+
+    .menu {
+      display: inline-block;
+      position: relative;
+      margin: 0 3px;
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      border: 2px solid white;
+      background: #ddad44;
+      border-radius: 15px 15px;
+    }
+
+    .menustar {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      height: 25px;
+      width: 25px;
+      font-size: 14px;
+      line-height: 25px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border-radius: 50%;
+    }
+
+
+    #bgbox {
+      box-sizing: border-box;
+      width: 100%;
+      height: 360px;
+      background: url(./images/board.png) no-repeat center/contain;
+    }
+
+    #game {
+      width: 360px;
+      height: 360px;
+      position: relative;
+      float: left;
+
+    }
+
+    #gamecenter {
+      box-sizing: border-box;
+      position: relative;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 10px;
+      justify-content: space-between;
+    }
+
+    #circle {
+      width: 100%;
+      height: 32%;
+      padding: 0 10px;
+      flex-direction: row;
+      position: relative;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+    }
+
+    #finbox {
+      float: right;
+      font-size: 48px;
+      color: red;
+      font-weight: bold;
+      text-align: center;
+      width: 45%;
+      height: 100%;
+      line-height: 350px;
+      -webkit-text-stroke: 1px white;
+    }
+
+
+    .holes {
+      width: 100px;
+      height: 90px;
+      border: 1px solid black;
+      background: url(./images/hole-empty.png), black;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 100px;
+      position: relative;
+    }
+
+
+    #btnbox {
+      padding-top: 22px;
+    }
+
+    #btn-start {
+      position: absolute;
+      left: -2px;
+      top: -10px;
+      width: 300px;
+      height: 48px;
+      font-size: 32px;
+      background: #ffc14d;
+      border: 2px solid #fd6c18;
+      border-radius: 15px 15px;
+      color: white;
+
+    }
+
+    .btnshadow {
+      position: relative;
+      margin: auto;
+      width: 296px;
+      height: 48px;
+      border-radius: 15px 15px;
+      background: #ff944d;
+      border: 2px solid #fd6c18;
+      box-shadow: 0px 10px 0px -3px rgba(53, 35, 2, 0.5);
+    }
+
+
+    .btnshadow:hover {
+      box-shadow: 0px 8px 0px -3px rgba(53, 35, 2, 0.5);
+    }
+
+    .step1 {
+      background: url(./images/step1.png);
+    }
+
+    .step2 {
+      background: url(./images/step2.png);
+    }
+
+    .step1-ok {
+      background: url(./images/step1-ok.png);
+    }
+
+    .step2-ok {
+      background: url(./images/step2-ok.png);
+    }
+
+
+
+    .power {
+      position: relative;
+      bottom: -32px;
+      right: 23px;
+      width: 30px;
+      height: 30px;
+      background: url(./images/btn-off.png) no-repeat center center/contain;
+    }
+
+
+    .holes-favor {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      color: white;
+      font-size: 36px;
+      font-weight: bolder;
+      -webkit-text-stroke: 1px red;
+    }
+
+    .taco {
+      background: url(./images/favor-taco.png) no-repeat center/contain;
+    }
+
+    .fish {
+      background: url(./images/favor-fish.png) no-repeat center/contain;
+    }
+
+    .meat {
+      background: url(./images/favor-meat.png) no-repeat center/contain;
+    }
+
+    .milk {
+      background: url(./images/favor-milk.png) no-repeat center/contain;
+    }
+
+    .finish {
+      background: url(./images/hole-finish.png) no-repeat center/contain;
+    }
+
+    .btnon {
+      background: url(./images/btn-on.png) no-repeat center center/contain;
+    }
+
+    .clock {
+      background: url(./images/btn-clock.png) no-repeat center center/contain;
+    }
+
+    .ok {
+      background: url(./images/btn-ok.png) no-repeat center center/contain;
+    }
+
+
+    .star {
+      background: url(./images/btn-star.png) no-repeat center center/contain;
+    }
+
+    .cook {
+      background: url(./images/btn-cook.png) no-repeat center center/contain;
+    }
+
+    .cursor-fin {
+      cursor: url(./images/cursor-fin.png) 20 20, auto;
+    }
+
+    .cursor-pour {
+      cursor: url(./images/cursor-pour.png) 5 0, auto;
+    }
+
+    .ping {
+      cursor: url(./images/cursor-ping.png) 0 80, auto;
+    }
+
+    .cut {
+      cursor: url(./images/cursor-cut.png) 0 80, auto;
+    }
+
+    .send {
+      background: url(./images/send.png) no-repeat center;
+      background-size: 60%;
+    }
+
+    .send1 {
+      background: url(./images/send1.png) no-repeat center;
+      background-size: 60%;
+    }
+
+    .send2 {
+      background: url(./images/send2.png) no-repeat center;
+      background-size: 60%;
+    }
+
+    .send3 {
+      background: url(./images/send3.png) no-repeat center;
+      background-size: 60%;
+    }
+
+    .send4 {
+      background: url(./images/send4.png) no-repeat center;
+      background-size: 60%;
+    }
+
+    .send5 {
+      background: url(./images/send5.png) no-repeat center;
+      background-size: 60%;
+    }
+
+    .send6 {
+      background: url(./images/send6.png) no-repeat center;
+      background-size: 60%;
+    }
+
+    #rankbox {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      height: 450px;
+      background: #e3bb7d;
+      border: 5px solid white;
+      border-radius: 50px;
+      text-align: center;
+      box-shadow: 2px 2px 10px 1px rgb(0, 0, 0, 0.3), inset 1px 1px 5px 3px rgb(0, 0, 0, 0.3);
+    }
+
+    #yourscore {
+      width: 300px;
+      margin: 5% auto auto auto;
+      border-radius: 25px;
+
+    }
+
+    #yourscore p {
+      font-size: 28px;
+      margin: 25px 15px 0 15px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 25px;
+    }
+
+    #finalscore {
+      font-size: 68px;
+      color: white;
+      -webkit-text-stroke: 3px rgb(0, 0, 0);
+    }
+
+    #bestscore {
+      width: 300px;
+      margin: 5% auto auto auto;
+
+    }
+
+    #bestscore p {
+      font-size: 28px;
+      margin: 15px 15px 20px 15px;
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    #bestscore table th {
+      width: 150px;
+      font-size: 22px;
+      font-weight: normal;
+      background: rgb(255, 208, 0);
+    }
+
+    #bestscore table td {
+      font-size: 22px;
+      background: white;
+    }
+
+    #btn-again {
+      position: absolute;
+      left: -2px;
+      top: -10px;
+      width: 300px;
+      height: 48px;
+      font-size: 32px;
+      background: #ffc14d;
+      border: 2px solid #fd6c18;
+      border-radius: 15px 15px;
+      color: white;
+    }
+
+    .burnt {
+      background: url(./images/burnt.png);
+    }
+
+    #footer {
+      width: 700px;
+      margin: auto;
+      height: 80px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="all">
+    <div id="flag"></div>
+    <div id="container">
+      <div id="top">
+        <div id="menubox">
+          <p>Menu</p>
+          <div class="menu"><img src="./images/favor-taco.png" alt="" height="50">
+            <div class="menustar">+5</div>
+          </div>
+          <div class="menu"><img src="./images/favor-meat.png" alt="" height="50">
+            <div class="menustar">+8</div>
+          </div>
+          <div class="menu"><img src="./images/favor-fish.png" alt="" height="50">
+            <div class="menustar">+10</div>
+          </div>
+          <div class="menu"><img src="./images/favor-milk.png" alt="" height="50">
+            <div class="menustar">+12</div>
+          </div>
+          <div class="menu"><img src="./images/menu-finished.png" alt="" height="50">
+            <div class="menustar">+20</div>
+          </div>
+        </div>
+        <div id="scorebox">
+          <p>Score</p>
+          <div>&nbsp;<span id="text-score">--</span></div>
+        </div>
+        <div id="timebox">
+          <p>Time</p>
+          <div><span id="text-countdown">--</span>&nbsp;</div>
+        </div>
+      </div>
+      <div id="bgbox">
+        <div id="game">
+          <div id="gamecenter">
+            <div id="circle">
+              <div class="holes" id="hole7">
+                <div class="holes-favor"></div>
+              </div>
+              <div class="power"></div>
+
+              <div class="holes" id="hole8">
+                <div class="holes-favor"></div>
+              </div>
+              <div class="power"></div>
+
+              <div class="holes" id="hole9">
+                <div class="holes-favor"></div>
+              </div>
+              <div class="power"></div>
+
+            </div>
+            <div id="circle">
+              <div class="holes" id="hole4">
+                <div class="holes-favor"></div>
+              </div>
+              <div class="power"></div>
+              <div class="holes" id="hole5">
+                <div class="holes-favor"></div>
+              </div>
+              <div class="power"></div>
+              <div class="holes" id="hole6">
+                <div class="holes-favor"></div>
+              </div>
+              <div class="power"></div>
+            </div>
+            <div id="circle">
+              <div class="holes" id="hole1">
+                <div class="holes-favor"></div>
+              </div>
+              <div class="power"></div>
+              <div class="holes" id="hole2">
+                <div class="holes-favor"></div>
+              </div>
+              <div class="power"></div>
+              <div class="holes" id="hole3">
+                <div class="holes-favor"></div>
+              </div>
+              <div class="power"></div>
+            </div>
+          </div>
+        </div>
+        <div id="finbox" class="send"></div>
+      </div>
+    </div>
+    <div id="footer">
+      <div id="btnbox">
+        <div class="btnshadow">
+          <button type="button" id="btn-start">START</button>
+        </div>
+      </div>
+      <div id="rankbox">
+        <div id="yourscore">
+          <p>Your Score</p>
+          <div id="finalscore">---</div>
+        </div>
+        <div id="bestscore">
+          <p>Best Score</p>
+          <table align="center" style="padding-bottom:15px;">
+            <tr>
+              <th>Player</th>
+              <th>Score</th>
+            </tr>
+            <tr>
+              <td><span id="highscore-player">-</span></td>
+              <td><span id="highscore-score">-</span></td>
+            </tr>
+          </table>
+          <div id="btnbox">
+            <div class="btnshadow">
+              <button type="button" id="btn-again">AGAIN</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const btnStart = document.getElementById('btn-start')
+    const holes = document.getElementsByClassName('holes')
+    const textCountdown = document.getElementById('text-countdown')
+    const textScore = document.getElementById('text-score')
+    const power = document.getElementsByClassName('power')
+    const holesFavor = document.getElementsByClassName('holes-favor')
+    const container = document.getElementById('container')
+    const finbox = document.getElementById('finbox')
+    const highscorePlayer = document.getElementById('highscore-player')
+    const highscoreScore = document.getElementById('highscore-score')
+    const rankbox = document.getElementById('rankbox')
+    const finalscore = document.getElementById('finalscore')
+    const btnAgain = document.getElementById('btn-again')
+    const bgbox = document.getElementById('bgbox')
+
+    let clk = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    let clk2 = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    let clk3 = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    let countdown = 60
+    let pointer = [90, 90, 90, 90, 90, 90, 90, 90, 90]
+    let gametimer = 0
+    let poweron = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    let score = 0
+    let cooktimer = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    let cooktimer2 = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    let favorclass = ['taco', 'fish', 'meat', 'milk']
+    let favortimer = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    let favor = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    let status = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    let finfavor = 0
+    let fincount = 0
+    let start = 0
+    let burnttimer = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    let highscore = { name: '', score: 0 }
+    const highStorage = JSON.parse(localStorage.getItem('wam'))
+    if (highStorage !== null) {
+      highscore = highStorage
+      highscorePlayer.innerText = highscore.name
+      highscoreScore.innerText = highscore.score
+    }
+
+    const game = () => {
+      countdown--
+      textCountdown.innerText = countdown
+      if (countdown <= 0) {
+        clearInterval(gametimer)
+        rankbox.style.display = "block"
+        bgbox.disabled = true
+        finalscore.innerText = score
+        if (score > highscore.score) {
+          highscore.score = score
+          highscore.name = prompt('最高分！請輸入名字')
+          if (name === null || name.length === 0) {
+            name = '路人'
+          }
+
+          highscorePlayer.innerText = highscore.name
+          highscoreScore.innerText = highscore.score
+          // 也可以這樣寫 const highscore={name:name,score:score}
+          localStorage.setItem('wam', JSON.stringify(highscore))
+
+        }
+        btnAgain.onclick = () => {
+          window.location.reload()
+        }
+      }
+    }
+    btnStart.onmouseover = () => {
+      btnStart.style.top = '-5px'
+      btnStart.style.background = '#ffb52a'
+    }
+    btnStart.onmouseout = () => {
+      btnStart.style.top = '-10px'
+      btnStart.style.background = '#ffb52a'
+    }
+
+    for (let i in power) {
+      rankbox.style.display = "none"
+      btnStart.onclick = () => {
+        btnStart.style.background = "lightgray"
+        btnStart.style.border = "2px solid #303030"
+        btnStart.parentElement.style.background = "gray"
+        btnStart.parentElement.style.border = "2px solid #303030"
+        btnStart.innerText = 'Already started'
+        start = 1
+        btnStart.disabled = true
+        gametimer = setInterval(game, 1000)
+        game()
+      }
+
+      let resetHoles = () => {
+        holes[i].classList.remove('step1')
+        holes[i].classList.remove('step1-ok')
+        holes[i].classList.remove('step2')
+        holes[i].classList.remove('step2-ok')
+        holes[i].classList.remove('finish')
+        holesFavor[i].classList.remove('taco')
+        holesFavor[i].classList.remove('fish')
+        holesFavor[i].classList.remove('meat')
+        holesFavor[i].classList.remove('milk')
+        power[i].classList.remove('ok')
+        power[i].classList.remove('star')
+        power[i].classList.remove('clock')
+        power[i].style.transform = 'rotate(0deg)'
+        container.classList.remove('cursor-fin')
+      }
+
+      let cook = () => {
+        pointer[i] += Math.round(Math.random() * 20 + 90)
+        power[i].style.transform = `rotate(${pointer[i]}deg)`
+        holes[i].classList.add('ping')
+        if (pointer[i] >= 450) {
+          holes[i].classList.replace('step1', 'step1-ok')
+          power[i].style.transform = ''
+          clearInterval(cooktimer[i])
+          pointer[i] = 90
+          status[i] = 1
+          power[i].classList.replace('clock', 'ok')
+
+        }
+      }
+      let cook2 = () => {
+        pointer[i] += Math.round(Math.random() * 20 + 90)
+        power[i].style.transform = `rotate(${pointer[i]}deg)`
+        if (pointer[i] >= 450) {
+          holes[i].classList.replace('step2', 'step2-ok')
+          power[i].style.transform = ''
+          clearInterval(cooktimer2[i])
+          power[i].classList.add('ok')
+          pointer[i] = 90
+          status[i]++
+        }
+      }
+
+      let favors = () => {
+        favor[i] = favorclass[Math.round(Math.random() * 3)]
+        holesFavor[i].classList.add(`${favor[i]}`)
+        for (let fav of favorclass) {
+          if (holesFavor[i].classList.contains(fav)) {
+            holesFavor[i].classList.remove(fav)
+            holesFavor[i].classList.add(`${favor[i]}`)
+          }
+        }
+        console.log(favorclass)
+      }
+      power[i].onmouseover = () => {
+        if (poweron[i] == 0) {
+          power[i].classList.add('btnon')
+        }
+      }
+      power[i].onmouseout = () => {
+        if (poweron[i] == 0) {
+          power[i].classList.remove('btnon')
+        }
+      }
+      power[i].onclick = () => {
+        if (poweron[i] == 0 && start != 0) {
+          // 啟動狀態
+          holes[i].disabled = false
+          holes[i].classList.add('cursor-pour')
+          poweron[i] = 1
+        }
+        else {
+          if (power[i].classList.contains('ok')) {
+
+          } else if (power[i].classList.contains('cook')) {
+
+          } else if (power[i].classList.contains('star')) {
+
+          } else {
+            // 關閉狀態
+            clearInterval(cooktimer[i])
+            clearInterval(cooktimer2[i])
+            clearInterval(favortimer[i])
+            resetHoles()
+            poweron[i] = 0
+            pointer[i] = 90
+            holes[i].style.cursor = 'default'
+            holes[i].disabled = true
+          }
+        }
+      }
+      holes[i].onclick = () => {
+        if (poweron[i] == 0) {
+        } else {
+          if (status[i] == 1) {
+            // 燒麵糊完成時，順便加菜
+            if (clk2[i] < 2) {
+              status[i]++
+              power[i].classList.remove('ok')
+              holes[i].classList.replace('step1-ok', 'step2')
+              // 啟動選口味環節
+              clk2[i]++
+              holes[i].classList.replace('ping', 'cut')
+              favortimer[i] = setInterval(favors, 2000);
+              favors()
+            }
+            power[i].classList.add('cook')
+          } else if (status[i] == 2) {
+            // 結束選口味環節
+            // 啟動燒口味計時器
+            clk3[i]++
+            if (clk3[i] < 2) {
+              clearInterval(favortimer[i])
+              holes[i].classList.replace('cut', 'ping')
+              power[i].classList.replace('cook', 'clock')
+              cooktimer2[i] = setInterval(cook2, 1000)
+            }
+          } else if (status[i] == 3) {
+            // 結束燒口味計時器
+            clearInterval(cooktimer2[i])
+            status[i]++
+            power[i].classList.remove('ok')
+            holes[i].classList.replace('step2-ok', 'finish')
+            power[i].classList.add('star')
+
+          } else if (status[i] == 4) {
+
+            container.classList.add('cursor-fin')
+            status[i] = 0
+            if (holesFavor[i].classList.contains('taco')) {
+              finfavor = 1
+            }
+            else if (holesFavor[i].classList.contains('meat')) {
+              finfavor = 2
+            }
+            else if (holesFavor[i].classList.contains('fish')) {
+              finfavor = 3
+            }
+            else if (holesFavor[i].classList.contains('milk')) {
+              finfavor = 4
+            } else {
+              finfavor = 5
+            }
+
+            clk[i] = 0
+            clk2[i] = 0
+            clk3[i] = 0
+            holes[i].classList.remove('ping')
+            holes[i].classList.remove('step1')
+            holes[i].classList.remove('step1-ok')
+            holes[i].classList.remove('step2')
+            holes[i].classList.remove('step2-ok')
+            holes[i].classList.remove('finish')
+            power[i].classList.remove('ok')
+            power[i].classList.remove('star')
+            power[i].classList.remove('clock')
+            holesFavor[i].classList.remove('taco')
+            holesFavor[i].classList.remove('fish')
+            holesFavor[i].classList.remove('meat')
+            holesFavor[i].classList.remove('milk')
+            power[i].style.transform = 'rotate(0deg)'
+
+          } else if (status[i] == 0) {
+            clk[i]++
+            if (clk[i] < 2) {
+              cooktimer[i] = setInterval(cook, 1000);
+              power[i].classList.add('clock')
+              holes[i].classList.add('step1')
+            }
+          }
+
+        }
+      }
+      if (container.classList.contains('cursor-fin')) {
+        holes.disabled = true
+        power.disabled = true
+      }
+
+      finbox.onclick = () => {
+        if (container.classList.contains('cursor-fin')) {
+          if (finfavor == 1) {
+            score += 5
+          }
+          if (finfavor == 2) {
+            score += 8
+          }
+          if (finfavor == 3) {
+            score += 10
+          }
+          if (finfavor == 4) {
+            score += 12
+          }
+          if (finfavor == 5) {
+            score += 1
+          }
+          finfavor = 0
+          status[i] = 0
+          container.classList.remove('cursor-fin')
+          console.log(container.classList)
+          fincount++
+          if (fincount == 1) {
+            finbox.classList.replace('send', 'send1')
+            console.log('a')
+          }
+          if (fincount == 2) {
+            finbox.classList.replace('send1', 'send2')
+          }
+          if (fincount == 3) {
+            finbox.classList.replace('send2', 'send3')
+          }
+          if (fincount == 4) {
+            finbox.classList.replace('send3', 'send4')
+          }
+          if (fincount == 5) {
+            finbox.classList.replace('send4', 'send5')
+          }
+          if (fincount == 6) {
+            finbox.classList.replace('send5', 'send6')
+            finbox.innerHTML = 'FINISHED!'
+            setTimeout(() => {
+              finbox.innerText = '     +20'
+            }, 500)
+            score += 20
+            setTimeout(() => {
+              finbox.classList.replace('send6', 'send')
+              finbox.innerText = ''
+              fincount = 0
+
+            }, 1000)
+          }
+          textScore.innerText = score
+        } else {
+
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
